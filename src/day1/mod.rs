@@ -7,9 +7,41 @@ pub fn run() {
 }
 
 fn give_me_door_password_from_instructions(input: String) -> usize {
-    update_dial(process_input(&input), 50)
-        .extract_if(.., |v| *v == 0)
-        .count()
+    let mut dial = 50;
+    process_input(&input)
+        .into_iter()
+        .map(|(direction, count)| {
+            let mut tick = 0;
+            match direction {
+                Direction::R => {
+                    for _ in 1..=count {
+                        if dial == 0 {
+                            tick += 1;
+                        }
+                        if dial == 99 {
+                            dial = 0;
+                        } else {
+                            dial += 1;
+                        }
+                    }
+                },
+                Direction::L => {
+                    (1..=count).for_each(|_| {
+                        if dial == 0 {
+                            tick += 1;
+                        }
+                        if dial == 0 {
+                            dial = 99;
+                        } else {
+                            dial -= 1;
+                        }
+                    });
+                },
+            };
+            println!("The dial is rotated {direction:?}{count} to point at {dial}.");
+            tick
+        })
+        .sum()
 }
 
 fn process_input(input: &str) -> Vec<(Direction, u32)> {
@@ -23,20 +55,6 @@ fn process_input(input: &str) -> Vec<(Direction, u32)> {
                 return (Direction::L, rotation.trim_matches('L').parse().unwrap());
             }
             panic!("unknown rotation direction : {rotation}")
-        })
-        .collect()
-}
-
-fn update_dial(input: Vec<(Direction, u32)>, mut dial: u32) -> Vec<u32> {
-    input
-        .into_iter()
-        .map(|(direction, count)| {
-            dial = match direction {
-                Direction::R => increment_dial(dial, count),
-                Direction::L => decrement_dial(dial, count),
-            };
-            println!("The dial is rotated {direction:?}{count} to point at {dial}.");
-            dial
         })
         .collect()
 }
@@ -70,13 +88,16 @@ enum Direction {
 
 #[cfg(test)]
 mod tests {
-
     #[test]
     fn compute_password() {
         let input = "R3
 L21
-L32";
+L32
+R50
+L50
+R50
+L1000";
         let password = crate::day1::give_me_door_password_from_instructions(input.to_string());
-        assert_eq!(password, 1);
+        assert_eq!(password, 12);
     }
 }
