@@ -9,25 +9,39 @@ fn solve_riddle(input: String) -> usize {
     input
         .split(",")
         .map(|interval| interval.split('-').collect())
-        .map(|interval_bound: Vec<&str>| -> usize {
+        .flat_map(|interval_bound: Vec<&str>| -> Vec<usize> {
             let Ok(start) = interval_bound.get(0).unwrap().parse::<usize>() else {
                 panic!("paseint error on interval_bound.get(0)")
             };
             let Ok(end) = interval_bound.get(1).unwrap().parse::<usize>() else {
                 panic!("paseint error on interval_bound.get(1)")
             };
-            (start..=end).filter(is_an_invalid_id).sum()
+            (start..=end).filter(is_an_invalid_id).collect()
         })
         .sum()
 }
 
 fn is_an_invalid_id(id: &usize) -> bool {
     let str_id = id.to_string();
-    if str_id.len() % 2 != 0 {
-        return false;
+    let mut current_pattern = str_id.get(0..1).unwrap().to_string();
+    let mut pattern_start_offset = 1;
+    while pattern_start_offset < str_id.len() {
+        if current_pattern.len() + pattern_start_offset > str_id.len() {
+            return false;
+        }
+        let extract_next_token = str_id
+            .get(pattern_start_offset..current_pattern.len() + pattern_start_offset)
+            .unwrap()
+            .to_string();
+        if current_pattern != extract_next_token {
+            let new_pattern = str_id.get(0..=pattern_start_offset).unwrap().to_string();
+            current_pattern = new_pattern;
+            pattern_start_offset += 1;
+        } else if pattern_start_offset + current_pattern.len() <= str_id.len() {
+            pattern_start_offset = pattern_start_offset + current_pattern.len();
+        }
     }
-    let (part1, part2) = str_id.split_at(str_id.len() / 2);
-    part1 == part2
+    current_pattern != str_id
 }
 
 #[cfg(test)]
