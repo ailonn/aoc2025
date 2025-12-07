@@ -12,32 +12,27 @@ fn give_me_door_password_from_instructions(input: String) -> usize {
         .into_iter()
         .map(|(direction, count)| {
             let mut tick = 0;
-            match direction {
-                Direction::R => {
-                    for _ in 1..=count {
-                        if dial == 0 {
-                            tick += 1;
-                        }
+            (1..=count).for_each(|_| {
+                if dial == 0 {
+                    tick += 1;
+                }
+                match direction {
+                    Direction::R => {
                         if dial == 99 {
                             dial = 0;
                         } else {
                             dial += 1;
                         }
                     }
-                },
-                Direction::L => {
-                    (1..=count).for_each(|_| {
-                        if dial == 0 {
-                            tick += 1;
-                        }
+                    Direction::L => {
                         if dial == 0 {
                             dial = 99;
                         } else {
                             dial -= 1;
                         }
-                    });
-                },
-            };
+                    }
+                };
+            });
             println!("The dial is rotated {direction:?}{count} to point at {dial}.");
             tick
         })
@@ -57,27 +52,6 @@ fn process_input(input: &str) -> Vec<(Direction, u32)> {
             panic!("unknown rotation direction : {rotation}")
         })
         .collect()
-}
-
-fn increment_dial(mut dial: u32, count: u32) -> u32 {
-    for _ in 1..=count {
-        if dial == 99 {
-            dial = 0;
-        } else {
-            dial += 1;
-        }
-    }
-    dial
-}
-fn decrement_dial(mut dial: u32, count: u32) -> u32 {
-    (1..=count).for_each(|_| {
-        if dial == 0 {
-            dial = 99;
-        } else {
-            dial -= 1;
-        }
-    });
-    dial
 }
 
 #[derive(Debug, PartialEq)]
