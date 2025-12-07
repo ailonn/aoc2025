@@ -1,5 +1,5 @@
 pub fn run() {
-    let Ok(input) = super::input_loader::load_from_file("src/day1/input.txt") else {
+    let Ok(input) = super::input_loader::load_from_file("day1") else {
         panic!("load input failed for day 1.")
     };
     let password = give_me_door_password_from_instructions(input);
