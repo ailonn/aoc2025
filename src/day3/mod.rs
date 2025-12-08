@@ -6,7 +6,35 @@ pub fn run() {
 }
 
 fn solve_riddle(input: String) -> usize {
-    todo!()
+    input
+        .split('\n')
+        .map(|bank| {
+            bank.chars()
+                .map(|c| c.to_string().parse().unwrap())
+                .collect()
+        })
+        .map(|bank_batteries: Vec<usize>| {
+            let max = bank_batteries.iter().max().unwrap();
+            let mut max_indice: usize = bank_batteries.len();
+            for index in 0..bank_batteries.len() {
+                let current_battery = bank_batteries.get(index).unwrap();
+                if current_battery == max {
+                    max_indice = index;
+                    break;
+                }
+            }
+            if max_indice == bank_batteries.len() {
+                panic!("not found {max} indice");
+            }
+            if max_indice + 1 == bank_batteries.len()
+                && let Some((_last, elements)) = bank_batteries.split_last()
+            {
+                return elements.iter().max().unwrap() * 10 + max;
+            }
+            let (_left, elements) = bank_batteries.split_at(max_indice + 1);
+            return max * 10 + elements.iter().max().unwrap();
+        })
+        .sum()
 }
 
 #[cfg(test)]
@@ -27,7 +55,7 @@ mod test {
     fn simple_input() {
         let input = "12345";
         let joltage = solve_riddle(input.into());
-        assert_eq!(joltage, 24);
+        assert_eq!(joltage, 45);
     }
 
     #[test]
