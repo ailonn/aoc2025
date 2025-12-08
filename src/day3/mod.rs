@@ -48,20 +48,20 @@ mod test {
 234234234234278
 818181911112111";
         let joltage = solve_riddle(input.into());
-        assert_eq!(joltage, 357);
+        assert_eq!(joltage, 3121910778619);
     }
 
     #[test]
     fn simple_input() {
         let input = "12345";
         let joltage = solve_riddle(input.into());
-        assert_eq!(joltage, 45);
+        assert_eq!(joltage, 12345);
     }
 
     #[test]
     fn input_of_one_bank() {
         let input = "818181911112111";
         let joltage = solve_riddle(input.into());
-        assert_eq!(joltage, 92);
+        assert_eq!(joltage, 888911112111);
     }
 }
