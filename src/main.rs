@@ -5,7 +5,7 @@ mod input_loader;
 
 use std::env;
 
-const DAYS_SOLVER: [fn(); 3] = [day1::run, day2::run, day3::run];
+const DAYS_SOLVER: [fn(); 4] = [day1::run, day2::run, day3::part1::run, day3::run];
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -22,6 +22,6 @@ fn main() {
             panic!("day {day} is not implemented");
         };
         solver();
-        println!("resolved day {day}");
+        println!("resolved day part at index {day}");
     }
 }
