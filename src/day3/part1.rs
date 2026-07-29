@@ -39,7 +39,7 @@ fn solve_riddle(input: String) -> usize {
 
 #[cfg(test)]
 mod test {
-    use crate::day3::solve_riddle;
+    use crate::day3::part1::solve_riddle;
 
     #[test]
     fn input_from_instructions() {
