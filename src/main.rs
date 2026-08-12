@@ -5,7 +5,7 @@ mod input_loader;
 
 use std::env;
 
-const DAYS_SOLVER: [fn(); 4] = [day1::run, day2::run, day3::part1::run, day3::run];
+const DAYS_SOLVER: [fn(); 4] = [day1::run, day2::run, day3::part1::run, day3::part2::run];
 
 fn main() {
     let args: Vec<String> = env::args().collect();
