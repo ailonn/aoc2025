@@ -28,44 +28,22 @@ fn turn_on_battery_to_get_max_voltage(bank_batteries: &Vec<usize>) -> usize {
 
     let mut last_battery_activated_index = 0;
     let mut count_activated_batteries = 0;
-    //dbg!(count_activated_batteries, BANK_TO_TURN_ON);
     while count_activated_batteries < BANK_TO_TURN_ON.into() {
         let left_to_found = BANK_TO_TURN_ON - count_activated_batteries;
-
-        //dbg!(&battery_activated, &bank);
         let bank_right_bound = bank.len() - left_to_found;
         let bank_left_bound = if last_battery_activated_index == 0 {
             0
         } else {
             last_battery_activated_index + 1
         };
-        // println!(
-        //     "
-        //     last_battery_activated_index: {last_battery_activated_index}
-        //     count_activated_batteries: {count_activated_batteries}
-        //     left_to_found: {left_to_found}
-        //     bank left len: {}
-        //     bank left index of sub array: {bank_left_bound}
-        //     bank right index of sub array: {bank_right_bound}
-        //     ",
-        //     bank.len() - last_battery_activated_index + 1
-        // );
 
         let (max, relative_max_indice) =
             found_max_and_max_index_on_sub_array(&bank[bank_left_bound..=(bank_right_bound)]);
 
         let max_indice = relative_max_indice + bank_left_bound;
-        // println!(
-        //     "
-        //     relative_max_indice: {relative_max_indice}
-        //     new max_indice: {max_indice}
-        //     max: {max}
-        //     "
-        // );
         bank[max_indice] = 0;
         battery_activated[max_indice] = max;
         last_battery_activated_index = max_indice;
-        // count_activated_batteries += 1;
         count_activated_batteries = battery_activated
             .clone()
             .into_iter()
