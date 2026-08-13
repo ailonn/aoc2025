@@ -48,7 +48,7 @@ mod test {
 234234234234278
 818181911112111";
         let joltage = solve_riddle(input.into());
-        assert_eq!(joltage, 3121910778619);
+        assert_eq!(joltage, 357);
     }
 
     #[test]
