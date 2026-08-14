@@ -9,7 +9,44 @@ pub fn run() {
 }
 
 pub fn solve_riddle(input: String) -> usize {
-    todo!()
+    let mut ranges = vec![];
+    let mut ids = vec![];
+    input.split('\n').for_each(|line| {
+        if line.contains("-") {
+            ranges.push(line);
+        } else if line != "" {
+            ids.push(line)
+        }
+    });
+    ids.iter()
+        .map(|id| is_fresh_id(id, &ranges))
+        .filter(|is_fresh| *is_fresh)
+        .count()
+}
+
+fn is_fresh_id(id: &str, ranges: &[&str]) -> bool {
+    for range in ranges {
+        let parsed_range_edge: Result<Vec<usize>, _> =
+            range.split("-").map(|edge| edge.parse::<usize>()).collect();
+        match parsed_range_edge {
+            Ok(range_edge) => {
+                assert_eq!(range_edge.len(), 2);
+                let Some(min) = range_edge.get(0) else {
+                    panic!();
+                };
+                let Some(max) = range_edge.get(1) else {
+                    panic!();
+                };
+                match id.parse::<usize>() {
+                    Ok(usize_id) if usize_id >= *min && usize_id <= *max => return true,
+                    Err(err) => panic!("{err}, {id}, {min}, {max}"),
+                    Ok(_) => (),
+                }
+            }
+            Err(_) => todo!(),
+        }
+    }
+    false
 }
 
 #[cfg(test)]
