@@ -8,7 +8,6 @@ pub fn run() {
 }
 
 fn solve_riddle(input: String) -> usize {
-    println!("solve_riddle");
     input
         .split('\n')
         .map(|bank| {
@@ -58,17 +57,13 @@ fn turn_on_battery_to_get_max_voltage(bank_batteries: &Vec<usize>) -> usize {
         .join("")
         .parse::<usize>()
         .unwrap();
-    //dbg!(parse);
     parse
-    // 0
 }
 
 fn found_max_and_max_index_on_sub_array(arr: &[usize]) -> (usize, usize) {
     let mut index: usize = 0;
     let mut max: usize = 0;
     let mut max_index: usize = 0;
-    //dbg!(arr);
-    //dbg!(arr.len());
     while index < arr.len() {
         if arr[index] > max {
             max = arr[index];
