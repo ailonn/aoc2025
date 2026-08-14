@@ -1,11 +1,18 @@
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 mod input_loader;
 
 use std::env;
 
-const DAYS_SOLVER: [fn(); 4] = [day1::run, day2::run, day3::part1::run, day3::part2::run];
+const DAYS_SOLVER: [fn(); 5] = [
+    day1::run,
+    day2::run,
+    day3::part1::run,
+    day3::part2::run,
+    day4::part1::run,
+];
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -19,7 +26,7 @@ fn main() {
             panic!("a number is expected instead of : {}", &args[1]);
         };
         let Some(solver) = DAYS_SOLVER.get(*day - 1) else {
-            panic!("day {day} is not implemented");
+            panic!("day at index {day} is not implemented");
         };
         solver();
         println!("resolved day part at index {day}");
