@@ -18,7 +18,7 @@ pub fn solve_riddle(input: String) -> usize {
     });
     for line_index in 0..map.len() {
         accessible_rolls = accessible_rolls + count_accessible_rolls_on_line(line_index, &mut map);
-        println!("{}", map[line_index].join(""));
+        // println!("{}", map[line_index].join(""));
     }
 
     accessible_rolls

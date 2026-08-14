@@ -6,12 +6,13 @@ mod input_loader;
 
 use std::env;
 
-const DAYS_SOLVER: [fn(); 5] = [
+const DAYS_SOLVER: [fn(); 6] = [
     day1::run,
     day2::run,
     day3::part1::run,
     day3::part2::run,
     day4::part1::run,
+    day4::part2::run,
 ];
 
 fn main() {
