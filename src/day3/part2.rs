@@ -1,4 +1,4 @@
-use std::{dbg, println, usize};
+use std::{println, usize};
 
 pub fn run() {
     let Ok(input) = super::super::input_loader::load_from_file("day3") else {
