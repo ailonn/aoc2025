@@ -2,7 +2,10 @@ pub fn run() {
     let Ok(input) = super::super::input_loader::load_from_file("day3") else {
         panic!("load input failed for day3 part1.")
     };
-    println!("day3 step two - invalid ids sum : {}", solve_riddle(input));
+    println!(
+        "day3 step one - activated batteries : {}",
+        solve_riddle(input)
+    );
 }
 
 fn solve_riddle(input: String) -> usize {

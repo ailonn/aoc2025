@@ -3,7 +3,7 @@ pub fn run() {
         panic!("load input failed for day 1.")
     };
     let password = give_me_door_password_from_instructions(input);
-    println!("Password : {password}");
+    println!("day1 step two - Password : {password}");
 }
 
 fn give_me_door_password_from_instructions(input: String) -> usize {
@@ -33,7 +33,7 @@ fn give_me_door_password_from_instructions(input: String) -> usize {
                     }
                 };
             });
-            println!("The dial is rotated {direction:?}{count} to point at {dial}.");
+            // println!("The dial is rotated {direction:?}{count} to point at {dial}.");
             tick
         })
         .sum()
